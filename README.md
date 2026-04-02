@@ -1,5 +1,4 @@
-# Project Title
-Anomaly Detection Across Domains: Fraud vs Intrusion
+# Anomaly Detection Across Domains: Fraud vs Intrusion
 
 ## Problem
 Anomaly detection is used in multiple domains such as finance and cybersecurity.
