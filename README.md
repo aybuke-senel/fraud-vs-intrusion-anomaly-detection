@@ -1,20 +1,20 @@
-#Project Title
+# Project Title
 Anomaly Detection Across Domains: Fraud vs Intrusion
 
-##Problem
+## Problem
 Anomaly detection is used in multiple domains such as finance and cybersecurity.
 This project investigates how the same anomaly detection technique performs on different types of data.
 
 ---
 
-##Goal
+## Goal
 To compare anomaly detection performance on:
 - Credit card fraud dataset
 - Network intrusion dataset
 
 ---
 
-##Approach
+## Approach
 - Exploratory Data Analysis (EDA)
 - Data preprocessing
 - Isolation Forest model
@@ -22,6 +22,6 @@ To compare anomaly detection performance on:
 
 --- 
 
-##Datasets
+## Datasets
 - [Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
 - [NSL-KDD Intrusion Detection](https://www.kaggle.com/datasets/hassan06/nslkdd)
