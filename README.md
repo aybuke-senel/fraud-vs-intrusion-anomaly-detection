@@ -7,9 +7,7 @@ This project explores anomaly detection across two different domains:
 - Financial Fraud Detection ([Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud))
 - Cyber Attack Detection ([NSL-KDD Intrusion Detection](https://www.kaggle.com/datasets/hassan06/nslkdd))
 
-The goal is to understand how the same anomaly detection mindset can be applied to both finance and cyber security, where the common problem is:
-
-**Normal Behavior vs Abnormal Behavior**
+The goal is to understand how the same anomaly detection mindset can be applied to both finance and cyber security, where the common problem is: **Normal Behavior vs Abnormal Behavior**
 
 Instead of treating fraud detection and cyber attack detection as separate problems, this project approaches both as anomaly detection tasks.
 
