@@ -1,210 +1,176 @@
-# Anomaly Detection Across Finance and Cyber Security
+# Cross-Domain Anomaly Detection  
+### Fraud Detection vs Cyber Intrusion Detection
 
-## Project Overview
+> A single anomaly detection approach applied across two fundamentally different domains.
 
-This project explores anomaly detection across two different domains:
+---
 
-- Financial Fraud Detection ([Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud))
-- Cyber Attack Detection ([NSL-KDD Intrusion Detection](https://www.kaggle.com/datasets/hassan06/nslkdd))
+## Overview
 
-The goal is to understand how the same anomaly detection mindset can be applied to both finance and cyber security, where the common problem is: **Normal Behavior vs Abnormal Behavior**
+This project investigates a fundamental question: **Can the same anomaly detection approach work across completely different domains?**
 
-Instead of treating fraud detection and cyber attack detection as separate problems, this project approaches both as anomaly detection tasks.
+Two real-world problems are explored:
 
-This project currently focuses on the financial fraud detection side and builds the foundation for future cyber security analysis.
+- Financial Fraud Detection  
+- Cyber Intrusion Detection  
 
-The workflow followed in this project:
+Although these problems seem unrelated, they share the same core structure: **Normal behavior vs abnormal behavior**
 
-PostgreSQL → Python EDA → Feature Engineering → Anomaly Detection Models → Model Comparison
+Instead of treating them separately, this project approaches both through a unified anomaly detection framework.
 
-The objective is not only to detect fraud, but also to understand anomaly behavior, compare model performance, and build a strong portfolio-level analytics project.
+---
+
+## Why This Matters (Real-World Context)
+
+In real systems:
+
+- Banks monitor transactions to detect fraud  
+- Security teams monitor network traffic to detect intrusions  
+
+Both problems are essentially: **detecting rare, abnormal patterns in large volumes of normal data**
+
+This project demonstrates how the same analytical mindset applies to both domains — while also highlighting how **data characteristics change model behavior**.
 
 ---
 
 ## Datasets
-- [Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+
+- [Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)  
 - [NSL-KDD Intrusion Detection](https://www.kaggle.com/datasets/hassan06/nslkdd)
 
 ---
 
-## PostgreSQL Database Setup
+## System Design
 
-All datasets were stored inside PostgreSQL for centralized querying and structured analysis.
+The project is designed as an end-to-end anomaly detection pipeline:
 
-Database used:
+PostgreSQL → Data Analysis → Feature Engineering → Anomaly Detection → Evaluation → Cross-Domain Comparison
 
-`anomaly_detection_db`
+### Technologies Used
 
-### Tables
-
-- `creditcard_fraud`
-- `nsl_kdd_train`
-- `nsl_kdd_test`
-
-Although NSL-KDD tables are already prepared in the database, the current project stage focuses only on the credit card fraud dataset.
-
-DBeaver was used for database management and SQL inspection.
-
----
-## Python Analysis (EDA)
-
-The credit card fraud dataset was analyzed using Python after being queried from PostgreSQL.
-
-### [Exploratory Data Analysis](notebooks/01_data_audit.ipynb)
-
-This notebook includes:
-
-- PostgreSQL connection
-- Data audit
-- Missing value analysis
-- Duplicate detection
-- Duplicate removal
-- Class imbalance analysis
-- Transaction amount analysis
-- Time analysis
-- Correlation analysis
-- Feature scaling
-- Visual output generation
-
-The main objective of this stage was to understand the dataset structure, identify anomaly patterns, and prepare clean and reliable data for anomaly detection models.
+- PostgreSQL (data storage)  
+- DBeaver (database management)  
+- Python (analysis & modeling)  
+- Jupyter Notebook (experimentation)
 
 ---
 
-## Visual Analysis
+## Notebooks
 
-Several visualizations were created to better understand fraud behavior patterns and identify anomaly signals within the dataset.
+The full analysis and modeling process is documented in the following [notebooks](notebooks). Each notebook represents a step in the end-to-end anomaly detection pipeline:
 
-The analysis focused on:
-
-- Class imbalance
-- Transaction amount behavior
-- Time-based fraud distribution
-- Feature correlation with fraud detection
-
-These visual insights helped support model selection and anomaly detection strategy.
+- [01_data_audit.ipynb](01_data_audit.ipynb) → Data understanding, cleaning, and feature analysis  
+- [02_creditcard_model.ipynb](02_creditcard_model.ipynb) → Fraud detection modeling and evaluation  
+- [03_nsl_kdd_model.ipynb](03_nsl_kdd_model.ipynb) → Cyber intrusion detection using anomaly detection  
+- [04_comparison.ipynb](04_comparison.ipynb) → Cross-domain comparison and final insights
 
 ---
 
-### 1. Class Distribution
+## Financial Fraud Detection
+
+### Data Understanding
+
+The dataset is highly imbalanced:
 
 ![Class Distribution](images/class_distribution.png)
 
-The dataset is highly imbalanced.
+Fraudulent transactions represent a very small portion of the data.
 
-Fraudulent transactions represent only a very small portion of total transactions.
-
-This strongly supports anomaly detection model usage.
+This justifies the use of anomaly detection methods.
 
 ---
 
-### 2. Transaction Amount Analysis
+### Key Insight
 
-![Amount Boxplot](images/transaction_amount_boxplot.png)
+Fraud patterns are **subtle**:
 
-Fraudulent transactions tend to show different transaction amount behavior compared to normal transactions.
-
-Although there is overlap, Amount remains an important anomaly signal.
-
----
-
-### 3. Log-Transformed Amount Distribution
-
-![Log Amount Boxplot](images/log_amount_boxplot.png)
-
-Log transformation improves visibility of amount behavior and helps better interpret fraud-related patterns.
+- Fraud transactions overlap with normal behavior  
+- No strong separation in time or amount  
+- Anomalies are weak and difficult to isolate  
 
 ---
 
-### 4. Time Distribution
+### Model Results
 
-![Time Distribution](images/time_distribution.png)
+| Model | Recall | Precision |
+|------|--------|----------|
+| Isolation Forest | 0.16 | 0.16 |
+| LOF | 0.00 | 0.00 |
 
-Fraud does not strongly cluster around a specific time period.
-
-This suggests that Time alone is not a strong predictive feature.
-
----
-
-### 5. Correlation Analysis
-
-![Correlation Heatmap](images/correlation_heatmap.png)
-
-The strongest fraud-related features were identified as:
-
-- V17
-- V14
-- V12
-
-These variables show the strongest anomaly relationship with fraudulent transactions.
+Isolation Forest performs better, but overall detection remains challenging.
 
 ---
 
-## Machine Learning Analysis
+## Cyber Intrusion Detection
 
-Anomaly detection models were developed to identify fraudulent transactions in the highly imbalanced credit card dataset.
+### Data Behavior
 
-### [Model Development](notebooks/02_creditcard_model.ipynb)
+Unlike fraud, cyber attacks show more structured patterns:
 
-This notebook includes:
-
-- Isolation Forest
-- Local Outlier Factor (LOF)
-- Prediction mapping
-- Classification report
-- Confusion matrix
-- Model comparison
-- Final model selection
-
-Since fraud transactions are extremely rare, anomaly detection models were preferred over standard classification approaches.
-
-The main objective of this stage was to evaluate which anomaly detection model performs better in detecting rare fraudulent transactions while minimizing false positives.
+- Protocol usage differs  
+- Service patterns change  
+- Behavior is more distinguishable  
 
 ---
 
-## Isolation Forest
+### Model Results
 
-Isolation Forest was selected as the first anomaly detection model because it performs well on highly imbalanced datasets and is widely used for anomaly detection tasks.
+| Model | Recall |
+|------|--------|
+| Isolation Forest | 0.86 |
+| LOF | 0.43 |
 
-### Results
-
-Fraud Recall: **0.16**
-
-This means the model successfully detected 16% of fraudulent transactions.
-
-Although recall remains limited due to extreme class imbalance, the model showed meaningful anomaly detection capability.
+Anomalies are significantly easier to detect compared to financial fraud.
 
 ---
 
-## Local Outlier Factor (LOF)
+### Example Model Output
 
-LOF was used as the second anomaly detection model for comparison.
+![Isolation Forest Confusion](images/nsl_iso_confusion.png)
 
-### Results
+---
 
-Fraud Recall: **0.00**
+## Cross-Domain Comparison
 
-LOF failed to detect fraudulent transactions in this dataset.
+![Domain Comparison](images/domain_recall_comparison.png)
 
-This suggests that density-based local anomaly detection was not suitable for this financial fraud problem.
+| Domain | Best Model | Recall |
+|--------|-----------|--------|
+| Fraud  | Isolation Forest | 0.16 |
+| Cyber  | Isolation Forest | 0.86 |
+
+This gap highlights how anomaly detection performance is driven by data structure rather than the model itself.
+---
+
+### Key Finding
+
+> The same model behaves completely differently depending on the nature of the data.
+
+- Fraud → weak, overlapping anomalies  
+- Cyber → strong, structured anomalies
 
 --- 
 
-## Model Comparison
+## Interpretation
 
-The performance of anomaly detection models was compared based on fraud detection capability rather than overall accuracy.
+This project reveals an important insight: **Anomaly detection is not domain-specific — but performance is data-dependent**
 
-Since the dataset is highly imbalanced, recall for the fraud class was considered the most important evaluation metric.
+---
 
-The main goal was to identify the model that captures the highest number of fraudulent transactions while minimizing false alarms.
+## Additional Visualizations
 
-![Model Comparison](images/model_comparison_recall.png)
+More detailed visualizations can be found in the [images](images) folder:
 
-| Model | Fraud Recall | Fraud Precision | Fraud F1 |
-|---|---:|---:|---:|
-| Isolation Forest | 0.16 | 0.16 | 0.16 |
-| Local Outlier Factor | 0.00 | 0.00 | 0.00 |
+- Feature correlations  
+- Model comparisons  
+- LOF vs Isolation Forest behavior  
+- Distribution analysis  
 
-Isolation Forest clearly outperformed LOF and proved to be the more suitable anomaly detection model for this fraud detection problem.
+---
 
-Tree-based anomaly detection methods performed better than density-based local anomaly detection for this highly imbalanced financial dataset.
+## Final Conclusion
 
+> The same anomaly detection approach can be applied across domains —  
+> but understanding the nature of the data is critical for interpreting model performance.
+
+This is what differentiates a simple model implementation from a real-world analytical solution.
