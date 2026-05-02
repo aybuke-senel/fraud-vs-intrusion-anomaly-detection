@@ -59,10 +59,10 @@ PostgreSQL → Data Analysis → Feature Engineering → Anomaly Detection → E
 
 The full analysis and modeling process is documented in the following [notebooks](notebooks). Each notebook represents a step in the end-to-end anomaly detection pipeline:
 
-- [01_data_audit.ipynb](01_data_audit.ipynb) → Data understanding, cleaning, and feature analysis  
-- [02_creditcard_model.ipynb](02_creditcard_model.ipynb) → Fraud detection modeling and evaluation  
-- [03_nsl_kdd_model.ipynb](03_nsl_kdd_model.ipynb) → Cyber intrusion detection using anomaly detection  
-- [04_comparison.ipynb](04_comparison.ipynb) → Cross-domain comparison and final insights
+- [01_data_audit.ipynb](notebooks/01_data_audit.ipynb) → Data understanding, cleaning, and feature analysis  
+- [02_creditcard_model.ipynb](notebooks/02_creditcard_model.ipynb) → Fraud detection modeling and evaluation  
+- [03_nsl_kdd_model.ipynb](notebooks/03_nsl_kdd_model.ipynb) → Cyber intrusion detection using anomaly detection  
+- [04_comparison.ipynb](notebooks/04_comparison.ipynb) → Cross-domain comparison and final insights
 
 ---
 
